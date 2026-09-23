@@ -6,7 +6,7 @@ EE_SRC  = $(wildcard *.c utils/*.c player/*.c ball/*.c)
 EE_OBJS = $(addprefix $(EE_OBJS_DIR), $(EE_SRC:.c=.o))
 
 EE_INCS += -I$(GSKIT)/include -I$(PS2SDK)/ports/include
-EE_LIBS += -L$(GSKIT)/lib -L$(PS2SDK)/ports/lib -lgskit -ldmakit -lpad -lpacket -ldma -lgraph -ldraw -lpacket2 -lmath3d -lkernel -lc
+EE_LIBS += -L$(GSKIT)/lib -L$(PS2SDK)/ports/lib -lpatches -lgskit -ldmakit -lpad -lpacket -ldma -lgraph -ldraw -lpacket2 -lmath3d -lkernel -lc
 
 all: $(EE_BIN)
 	$(EE_STRIP) --strip-all $(EE_BIN)
