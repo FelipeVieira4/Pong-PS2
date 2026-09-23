@@ -2,7 +2,7 @@ EE_BIN = pong.elf
 
 EE_OBJS_DIR = obj/
 
-EE_SRC  = $(wildcard *.c utils/*.c player/*.c)
+EE_SRC  = $(wildcard *.c utils/*.c player/*.c ball/*.c)
 EE_OBJS = $(addprefix $(EE_OBJS_DIR), $(EE_SRC:.c=.o))
 
 EE_INCS += -I$(GSKIT)/include -I$(PS2SDK)/ports/include

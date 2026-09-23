@@ -7,8 +7,8 @@
 typedef struct
 {
     /* data */
-    u16 pos_x;
-    u16 pos_y;
+    int pos_x;
+    int pos_y;
 
     u8 size;
 }react_s;

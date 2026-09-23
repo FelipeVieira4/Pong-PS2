@@ -9,7 +9,7 @@
 #include <string.h>
 
 #include "player/player.h"
-
+#include "ball/ball.h"
 #include "utils/pad_controller.h"
 #include "utils/react_utils.h"
 
@@ -31,6 +31,9 @@ int init_pad() {
         return 0;
     }
 
+
+    // Apenas uma validação se o controle está conectado
+
     printf("[PAD] Aguardando sincronizacao do controle...\n");
     int state;
     int timeout = 1000;
@@ -38,7 +41,7 @@ int init_pad() {
     while (timeout > 0) {
         state = padGetState(0, 0);
 
-        // PAD_STATE_STABLE (6) ou PAD_STATE_FINDCTP1 (2) indicam controle pronto
+        // PAD_STATE_STABLE ou PAD_STATE_FINDCTP1 indicam controle pronto
         if (state == PAD_STATE_STABLE || state == PAD_STATE_FINDCTP1) {
             printf("[PAD] Controle detectado com sucesso! (Estado: %d)\n", state);
             return 1;
@@ -54,10 +57,9 @@ int init_pad() {
 }
 
 int main(int argc, char *argv[]) {
-    // 1. Inicializa o controle e valida se respondeu
     init_pad();
 
-    // 2. Inicializa o gsKit (Vídeo) e dmaKit (Transferência de Dados)
+    // Inicializa o gsKit (Vídeo) e dmaKit (Transferência de Dados)
     GSGLOBAL *gsGlobal = gsKit_init_global();
     gsGlobal->PSM  = GS_PSM_CT32;
     gsGlobal->PSMZ = GS_PSMZ_16S;
@@ -71,24 +73,29 @@ int main(int argc, char *argv[]) {
     gsKit_init_screen(gsGlobal);
     gsKit_mode_switch(gsGlobal, GS_ONESHOT);
 
-    // Definindo Cores (R, G, B, A)
-    u64 black = GS_SETREG_RGBA(0x00, 0x00, 0x00, 0x00);
+    // Definindo Cores do fundo da tela (R, G, B, A)
+    u64 background_color = GS_SETREG_RGBA(0x00, 0x00, 0x00, 0x00);
+    u64 ball_color = GS_SETREG_RGBA(0x00, 0xFF, 0x00, 0x00);
 
     // Players
     player_s player_left=init_player(1);
     player_s player_right=init_player(2);
 
-    react_s ball;
+    ball_s ball=init_ball(gsGlobal);
 
     for (;;) {
         update_player(gsGlobal, &player_left);
         update_player(gsGlobal, &player_right);
+        
+        update_ball(gsGlobal,&ball,&player_left,&player_right);
 
         // Renderização
-        gsKit_clear(gsGlobal, black);
+        gsKit_clear(gsGlobal, background_color);
 
         draw_player(gsGlobal,&player_left);
         draw_player(gsGlobal,&player_right);
+
+        draw_react_pro(gsGlobal, &ball.react, ball_color);
 
         gsKit_queue_exec(gsGlobal);
         gsKit_sync_flip(gsGlobal);
