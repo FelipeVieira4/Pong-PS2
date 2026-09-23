@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "PS2",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/local/ps2dev/ps2sdk/ee/include",
+                "/usr/local/ps2dev/ps2sdk/common/include",
+                "/usr/local/ps2dev/gsKit/include",
+                "/usr/local/ps2dev/ee/mips64r5900el-ps2-elf/include",
+                "/usr/local/ps2dev/ee/lib/gcc/mips64r5900el-ps2-elf/15.2.0/include"
+            ],
+            "defines": [
+                "_EE"
+            ],
+            "compilerPath": "/usr/local/ps2dev/ee/bin/mips64r5900el-ps2-elf-gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
