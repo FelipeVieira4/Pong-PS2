@@ -25,6 +25,8 @@ void update_player(GSGLOBAL *gsGlobal, player_s *player){
     struct padButtonStatus buttons;
     u32 paddata;
 
+
+
     int state = padGetState(0, 0);
     if (state == PAD_STATE_STABLE || state == PAD_STATE_FINDCTP1) {
         if (padRead(0, 0, &buttons) != 0) {
@@ -32,16 +34,26 @@ void update_player(GSGLOBAL *gsGlobal, player_s *player){
 
             u8 speed=player->speed;
 
-            if (paddata & PAD_UP&&(player->pos_y-speed>=0))
+            int controle_cima=0,controle_baixo=0;
+
+            if (player->p_number==1){
+                controle_cima=PAD_UP;
+                controle_baixo=PAD_DOWN;
+            }else{
+                controle_cima=PAD_TRIANGLE;
+                controle_baixo=PAD_CROSS;
+            }
+
+            if (paddata & controle_cima&&(player->pos_y-speed>=0))
                 player->pos_y -= speed;
-            if (paddata & PAD_DOWN&&((player->pos_y+PLAYER_HEIGHT)+speed<=gsGlobal->Height))
+            if (paddata & controle_baixo&&((player->pos_y+PLAYER_HEIGHT)+speed<=gsGlobal->Height))
                 player->pos_y += speed;
         }
     }
 }
 
 void draw_player(GSGLOBAL *gsGlobal,player_s *player){
-    draw_react(gsGlobal, player->pos_x, player->pos_y, PLAYER_WIDHT, PLAYER_HEIGHT,GS_SETREG_RGBA(0xFF, 0xFF, 0xFF, 0x00));
+    draw_react(gsGlobal, player->pos_x, player->pos_y, PLAYER_WIDHT, PLAYER_HEIGHT,GS_SETREG_RGBA(0xFF, 0xFF, 0xFF, 0x80));
 
     return;
 }
