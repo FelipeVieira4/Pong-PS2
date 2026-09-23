@@ -1,0 +1,2 @@
+make
+flatpak run --env=QT_IM_MODULE=none net.pcsx2.PCSX2 caminho_projeto/pong.elf
