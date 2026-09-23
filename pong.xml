@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iso_project image_name="PONG.iso">
+
+    <identifiers
+        system          ="PLAYSTATION"
+        application     ="PLAYSTATION"
+        volume          ="PONG"
+        volume_set      ="PONG"
+        publisher       ="ME"
+        data_preparer   ="MKPS2ISO"
+    />
+
+    <layer>
+        <directory_tree source=".">
+            <file name="SYSTEM.CNF" source="system.txt"/>
+            <file name="PONG.ELF" source="pong.elf"/>
+        </directory_tree>
+    </layer>
+
+</iso_project>
